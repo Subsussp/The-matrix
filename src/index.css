@@ -1,13 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* Hide scrollbars completely */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
+}
+/* Remove all scroll bars completely */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Hide scroll bars in all browsers */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.context-menu {
+  position: absolute;
+  background-color: #fafafa;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  color: #333;
+}
+
+
+.graph {
+  border-bottom: 0px solid rgb(229, 231, 235);
+  border-left: 0px solid rgb(229, 231, 235);
+  border-right: 0px solid rgb(229, 231, 235);
+  border-top: 0px solid rgb(229, 231, 235);
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  display: block;
+  font-family: 'Cabin', Helvetica, Arial, sans-serif;
+  font-feature-settings: normal;
+  font-size: 16px;
+  font-weight: 300;
+  height: 533px;
+  line-height: 24px;
+  position: relative;
+  tab-size: 4;
+  text-size-adjust: 100%;
+  unicode-bidi: isolate;
+  width: 100%; /* You didn't include width — defaulted to 100% */
+}
+
+@font-face {
+  font-family: 'NeueRegrade';
+  src: url('./assets/fonts/NeueRegrade.ttf') format('truetype');
+  font-weight: 100 900; /* variable range */
+  font-style: normal;
+  font-display: swap;
 }
