@@ -1,8 +1,10 @@
 import scrapeGoogle from "../Algo/scrap";
+import { useNavigate } from 'react-router-dom';
 
 export default function RightClickMenu({ x, y, visible, onOptionClick }) {
+  let navigate = useNavigate()
   function handleclick(e){
-    scrapeGoogle(onOptionClick[0].name)
+    navigate(`/page?t=${onOptionClick[0].name}&r=${onOptionClick[0].DisplayName}`)
   }
   if (!visible) return null;
     const listStyle = {
@@ -17,8 +19,8 @@ export default function RightClickMenu({ x, y, visible, onOptionClick }) {
     z-[5] box-border text-[#333333] block 
     font-[300] font-[Cabin,Helvetica,Arial,sans-serif]
     text-[16px] leading-[24px]
-    absolute h-[134px] w-fit
-  `}
+    absolute h-[90px] w-fit
+  `}// h 134
   style={{
     left: x,
     top: y,
@@ -40,7 +42,7 @@ export default function RightClickMenu({ x, y, visible, onOptionClick }) {
     textSizeAdjust: '100%',
     backgroundColor: "rgb(4, 133, 203)",  color: "rgb(255, 255, 255)"}}>
         <span>{onOptionClick[0].DisplayName}</span></li>
-        <li  className={`
+        {/* <li  className={`
     text-black text-left px-2.5 py-2.5
     list-none list-outside
     font-[300] font-[Cabin,Helvetica,Arial,sans-serif]
@@ -56,7 +58,7 @@ export default function RightClickMenu({ x, y, visible, onOptionClick }) {
     backgroundColor: "rgb(161, 161, 161)"
   }}>
       <a href="#">Info</a>
-      </li>
+      </li> */}
       <li onClick={handleclick} className={`
     text-black text-left px-2.5 py-2.5
     list-none list-outside

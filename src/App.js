@@ -1,8 +1,10 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NetworkVisual from './components/NetworkVisualization';
 import SearchBar from './components/SearchBar';
-import React, { useRef, useState } from 'react';
+import {Topicpage} from './components/Topicpage.jsx';
+import { useEffect, useRef, useState } from 'react';
 import Testcomp from './components/testcomp';
+import Loader from './components/Waiting.jsx';
 
 // const NetworkVisualization = () => {
 //   const ai = new GoogleGenAI({ apiKey: "AIzaSyAnzX5YcIF-SRBw0_TgDpnO1cT_iWyVEO8" });
@@ -444,11 +446,52 @@ import Testcomp from './components/testcomp';
 
 
 
- const About = () => {
+function About() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true); // trigger fade after component mounts
+  }, []);
+
   return (
-    <div>About</div>
-  )
+    <div
+      className={`min-h-screen select-none text-white flex items-center justify-center px-6 py-12 transition-colors duration-1000 ${
+        loaded ? "bg-black" : "bg-transparent"
+      }`}
+    >
+      <div className={`max-w-3xl text-center `}> 
+        <h1 className={`text-5xl font-[NeueRegrade] font-extrabold tracking-wide mb-4 transition-colors duration-1000 ${loaded ? "text-white " : "text-black"}`}>
+          About This Project
+        </h1>
+        <div className="w-24 h-[2px] bg-white mx-auto mb-8 "></div>
+
+        <p className={`text-xl font-[NeueRegrade] t leading-relaxed mb-6 ransition-colors duration-1000 ${loaded ? "text-gray-300 " : "text-black"}`}>
+          When I first started building this, I knew it would become something special. 
+          I created it as a way to{" "}
+          <span className="text-white font-semibold font-[NeueRegrade]">
+            Visualize topics that are linked to each other
+          </span>{" "}
+          and dig deeper — literally, to get to the bottom of things.
+        </p>
+
+        <p className={`text-xl leading-relaxed mb-6 font-[NeueRegrade] transition-colors duration-1000 ${loaded ? "text-gray-300 " : "text-black"}`}>
+          With more efficient AI models and a stronger backend, this project could grow into 
+          something massive, something that no one could fully control.
+        </p>
+
+        <p className={`text-xl leading-relaxed mb-6 font-[NeueRegrade] transition-colors duration-1000 ${loaded ? "text-gray-300 " : "text-black"}`}>
+          I built it on my own — a one-person project.
+        </p>
+
+        <p className="text-xl text-gray-400 leading-relaxed italic">
+          So if you have any suggestions or you have an idea message me and maybe you can add it yourself.
+        </p>
+      </div>
+    </div>
+  );
 }
+
+
 
 
  const Idk = () => {
@@ -456,22 +499,111 @@ import Testcomp from './components/testcomp';
     <div>Idk</div>
   )
 }
+
+function Intro() {
+  const Ref = useRef();
+  const [letterStates, setLetterStates] = useState([]); // track states for each letter
+  const letters = ["A", "Σ","E"]; // your logo letters
+  const introRef = useRef();
+
+  useEffect(() => {
+    sessionStorage.setItem("introShown", "false");
+    // 1) show letters one by one
+    letters.forEach((_, idx) => {
+      setTimeout(() => {
+        setLetterStates((prev) => {
+          const newStates = [...prev];
+          newStates[idx] = "active";
+          return newStates;
+        });
+      }, (idx + 1) * 400);
+    });
+    
+    // 2) fade letters one by one
+    setTimeout(() => {
+      letters.forEach((_, idx) => {
+        setTimeout(() => {
+          setLetterStates((prev) => {
+            const newStates = [...prev];
+            newStates[idx] = "fade";
+            return newStates;
+          });
+        }, (idx + 1) * 50);
+      });
+    }, 2000);
+    
+    // 3) hide intro screen
+    setTimeout(() => {
+      if (introRef.current) introRef.current.style.top = "-100vh";
+    }, 2200);
+  }, []);
+  return (
+    <div ref={introRef} className={`intro`}>
+    <h1 className="absolute top-[45%] left-1/2 cancel -translate-x-1/2 -translate-y-1/2 text-[#000]" ref={Ref}>
+    <span
+    className={`letter ${
+      letterStates[0] == "active"
+      ? "active"
+      : ""
+      } ${letterStates[0] == "fade"? "fade" : ""}`}
+      >
+      A
+      </span>
+      <span
+      className={`letter ${
+        letterStates[1] == "active"
+        ? "active"
+        : ""
+        } ${letterStates[1] == "fade" ?"fade" : ""}`}
+        >
+        Σ
+        </span>
+        <span
+        className={`letter ${
+            letterStates[2] == "active"
+              ? "active"
+              : ""
+          } ${letterStates[2] == "fade" ?"fade" : ""}`}
+        >
+          E
+        </span>
+        <br />
+      </h1>
+    </div>
+  );
+}
+
+
 function App() {
+  let Searchdata = useRef([])
+  let [prevsearchparam,setPrevsearchparam] = useState()
   const [searchparam, setSearchparam] = useState('');
   const [searchTrigger, setSearchTrigger] = useState(0);
+  const [Searching, setSearching] = useState(false);
+  const DirectionForward = useRef(true);
   const searchpass = useRef();
   const [dmode,setdmode] = useState(true);
   const Location = useLocation();
+  console.log(sessionStorage.getItem("introShown") )
+  console.log(sessionStorage.getItem("introShown") )
+  useEffect(() => {
+    sessionStorage.setItem("introShown", "true");
+    }, []);
+  useEffect(() => {
+    document.getElementById('style1') &&  document.getElementById('style1').remove()
+  }, [Location]);
+
   return (
     // <div>
     <>
       <div className={Location.pathname == '/' ? "block" : "hidden"}>
-        <NetworkVisual dmode={dmode} searchpass={searchpass} searchTrigger={searchTrigger} searchparam={searchparam}/>
+        <NetworkVisual Searchdata={Searchdata} DirectionForward={DirectionForward} Searching={Searching} prevsearchparam={prevsearchparam} setPrevsearchparam={setPrevsearchparam}  setSearching={setSearching} dmode={dmode} searchpass={searchpass} searchTrigger={searchTrigger} searchparam={searchparam}/>
       {/* <Testcomp/> */}
       </div>
-    <SearchBar dmode={dmode} setdmode={setdmode} searchpass={searchpass} setSearchparam={setSearchparam} setSearchTrigger={setSearchTrigger} searchparam={searchparam} Location={Location.pathname}/>
+    {!['/page'].includes(Location.pathname) && <SearchBar DirectionForward={DirectionForward} Searchdata={Searchdata} setPrevsearchparam={setPrevsearchparam} setSearching={setSearching} dmode={dmode} setdmode={setdmode} searchpass={searchpass} setSearchparam={setSearchparam} setSearchTrigger={setSearchTrigger} searchparam={searchparam} Location={Location.pathname}/>}
 <Routes>
-    <Route index element={<></>}/>
+    <Route index element={sessionStorage.getItem("introShown") == "false" ? <></> : <Intro/>}/>
+    <Route path='/page' element={<Topicpage/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/Idk'  element={<Idk/>} />
   </Routes>
