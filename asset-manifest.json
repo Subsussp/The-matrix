@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/The-matrix/static/css/main.15d6c535.css",
-    "main.js": "/The-matrix/static/js/main.b10f3051.js",
+    "main.css": "/The-matrix/static/css/main.e663711e.css",
+    "main.js": "/The-matrix/static/js/main.1b1844b8.js",
     "static/js/206.cf1cb91b.chunk.js": "/The-matrix/static/js/206.cf1cb91b.chunk.js",
     "static/media/NeueRegrade.ttf": "/The-matrix/static/media/NeueRegrade.b0bdec418445bf72d167.ttf",
     "index.html": "/The-matrix/index.html"
   },
   "entrypoints": [
-    "static/css/main.15d6c535.css",
-    "static/js/main.b10f3051.js"
+    "static/css/main.e663711e.css",
+    "static/js/main.1b1844b8.js"
   ]
 }
